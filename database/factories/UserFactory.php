@@ -29,6 +29,9 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'admin' => false,
+            'phone_number' => fake()->unique()->phoneNumber(),
+            'card_number' => fake()->unique()->regexify('[0-9a-zA-Z]{16}') // 16 karakter hosszú, 0-9, a-z, A-Z karaktereket tartalmazó kártyaszám
         ];
     }
 

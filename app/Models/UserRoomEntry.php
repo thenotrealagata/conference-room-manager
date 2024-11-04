@@ -11,7 +11,6 @@ class UserRoomEntry extends Model
 {
     /** @use HasFactory<\Database\Factories\UserRoomEntryFactory> */
     use HasFactory, Notifiable;
-    //successful [bool] - sikeres volt-e a belépés
 
     /**
      * The attributes that are mass assignable.

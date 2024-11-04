@@ -17,7 +17,7 @@ class UserRoomEntryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'successful' => fake()->boolean()
         ];
     }
 }
