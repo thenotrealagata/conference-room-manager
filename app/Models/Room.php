@@ -2,16 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Room extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<\Database\Factories\RoomFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -21,10 +19,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
-        'password',
-        'phone_number',
-        'card_number'
+        'description',
+        'filename',
+        'filename_hash',
     ];
 
     /**
@@ -33,9 +30,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
-        'admin'
     ];
 
     /**
@@ -46,8 +40,6 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
         ];
     }
 
@@ -55,7 +47,7 @@ class User extends Authenticatable
         return $this->hasMany(UserRoomEntry::class);
     }
 
-    public function position(): BelongsTo {
-        return $this->belongsTo(Position::class);
+    public function positions(): HasMany {
+        return $this->hasMany(Position::class);
     }
 }

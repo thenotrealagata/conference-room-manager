@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class UserRoomEntry extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<\Database\Factories\UserRoomEntryFactory> */
     use HasFactory, Notifiable;
+    //successful [bool] - sikeres volt-e a belépés
 
     /**
      * The attributes that are mass assignable.
@@ -20,11 +19,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'phone_number',
-        'card_number'
+        'successful'
     ];
 
     /**
@@ -33,9 +28,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
-        'admin'
     ];
 
     /**
@@ -46,16 +38,14 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
         ];
     }
 
-    public function userRoomEntries(): HasMany {
-        return $this->hasMany(UserRoomEntry::class);
+    public function user(): BelongsTo {
+        return $this->BelongsTo(User::class);
     }
 
-    public function position(): BelongsTo {
-        return $this->belongsTo(Position::class);
+    public function room(): BelongsTo {
+        return $this->BelongsTo(Room::class);
     }
 }

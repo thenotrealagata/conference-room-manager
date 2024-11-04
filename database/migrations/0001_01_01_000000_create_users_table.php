@@ -17,8 +17,14 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('admin')->default(false);
+            $table->string('phone_number')->unique();
+            $table->string('card_number', 16)->unique(); // TODO validate: 16 karakter hosszú, 0-9, a-z, A-Z karaktereket tartalmazó kártyaszám
             $table->rememberToken();
             $table->timestamps();
+
+            $table->unsignedBigInteger('position_id');
+            $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
