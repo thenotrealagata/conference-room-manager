@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'test@example.com',
             'admin' => true,
-            'position_id' => $positions->random()->id
+            'position_id' => $positions->random()->id,
+            'password' => 'abc'
         ]);
 
         foreach($positions as $position) {
