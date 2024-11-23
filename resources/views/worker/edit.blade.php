@@ -59,22 +59,33 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-        </div>
-        @empty($worker)
-            <!--<div class="mb-3">
-                <textarea class="form-control @error('name') is-invalid @enderror" name="text" id="text" cols="30" rows="10" placeholder="Hiba leírása...">{{ old('text') }}</textarea>
-                @error('name')
+            @empty($worker)
+            <div class="col">
+                <input
+                    type="password"
+                    class="form-control @error('password') is-invalid @enderror"
+                    placeholder="Jelszó"
+                    name="password"
+                    id="password"
+                />
+                @error('password')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="mb-3">
-                <input type="file" class="form-control @error('file') is-invalid @enderror" name="file" id="file">
-                @error('file')
+            <div class="col">
+                @isset($positions)
+                    @foreach ($positions as $position)
+
+                        <input {{ old('position_id', $position->id ?? '') == $position->id ? 'checked' : '' }} type="radio" id="{{$position->id}}" name="position_id" value="{{$position->id}}">
+                        <label for="{{$position->id}}">{{$position->name}}</label><br>
+                    @endforeach
+                @endisset
+                @error('position_id')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
-            </div>-->
-            Még nincs dolgozó ezen az id-n!
-        @endempty
+            </div>
+            @endempty
+        </div>
         <div class="row">
             <button type="submit" class="btn btn-primary">Mentés</button>
         </div>

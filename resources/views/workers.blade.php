@@ -1,7 +1,9 @@
 
 <x-app-layout>
     @if (Auth::user()->admin)
-        <x-primary-button>Új dolgozó hozzáadása</x-primary-button>
+        <x-primary-button>
+            <a href="{{ route('workers.create') }}">Új dolgozó hozzáadása</a>
+        </x-primary-button>
     @endif
     <table class="table-auto">
         <tr>

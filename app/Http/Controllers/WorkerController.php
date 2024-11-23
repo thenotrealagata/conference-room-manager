@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Position;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,6 +29,33 @@ class WorkerController extends Controller
         ]);
     }
 
+    public function create(Request $request): View {
+        if(!Auth::user()->admin) {
+            abort(401);
+        }
+        return view('worker.edit', [
+            "positions" => Position::all('id', 'name')
+        ]);
+    }
+
+    public function store(Request $request): RedirectResponse {
+        if(!Auth::user()->admin) {
+            abort(401);
+        }
+
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|unique:App\Models\User,email|string|email',
+            'phone_number' => 'required|unique:App\Models\User,phone_number|string',
+            'card_number' => 'required|unique:App\Models\User,card_number|string|size:16|regex:/[a-zA-Z0-9]+/',
+            'password' => 'required|string',
+            'position_id' => 'required|integer|exists:App\Models\Position,id'
+        ]);
+        $worker = User::create($validated);
+
+        return Redirect::route('workers');
+    }
+
     public function destroy (Request $request, string $id): RedirectResponse {
         $user = User::findOrFail($id);
         if(!Auth::user()->admin) {
@@ -42,9 +70,9 @@ class WorkerController extends Controller
     public function update(Request $request, string $id) {
         $validated = $request->validate([
             'name' => 'required|string',
-            'email' => 'required|string|email',
-            'phone_number' => 'required|string',
-            'card_number' => 'required|string|size:16|regex:/[a-zA-Z0-9]+/'
+            'email' => 'required|unique:App\Models\User,email|string|email',
+            'phone_number' => 'required|unique:App\Models\User,phone_number|string',
+            'card_number' => 'required|unique:App\Models\User,card_number|string|size:16|regex:/[a-zA-Z0-9]+/',
         ]);
         $worker = User::findOrFail($id);
         $worker->update($validated);

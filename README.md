@@ -2,7 +2,7 @@
 [X] Seeder (3 pont)
 [X] Főoldal (1 pont)
 [X] Dolgozók listázása (2 pont)
-[ ] Új dolgozó létrehozása (3 pont)
+[X] Új dolgozó létrehozása (3 pont)
 [X] Dolgozó módosítása (3 pont)
 [X] Dolgozó törlése (1 pont)
 [ ] Dolgozó belépéseinek története (2 pont)

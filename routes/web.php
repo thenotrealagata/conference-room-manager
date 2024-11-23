@@ -26,10 +26,13 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/workers', [WorkerController::class, 'index'])->name('workers');
+
     Route::delete('/workers/{worker}', [WorkerController::class, 'destroy'])->name('workers.destroy');
+
+    Route::get('/workers/create', [WorkerController::class, 'create'])->name('workers.create');
+    Route::post('/workers', [WorkerController::class, 'store'])->name('workers.store');
     Route::get('/workers/{worker}', [WorkerController::class, 'edit'])->name('workers.edit');
     Route::patch('/workers/{worker}', [WorkerController::class, 'update'])->name('workers.update');
-    //Route::resource('workers', WorkerController::class);
 });
 
 require __DIR__.'/auth.php';
