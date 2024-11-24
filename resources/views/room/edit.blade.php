@@ -34,7 +34,11 @@
             </div>
             <div class='mb-3'>
                 @foreach ($positions as $position)
-                    <input {{ $room->positions->find($position->id) !== null ? 'checked' : '' }}  type="checkbox" name="position_id[]" value="{{ $position->id }}" />
+                    @if(isset($room))
+                        <input {{ $room->positions->find($position->id) !== null ? 'checked' : '' }}  type="checkbox" name="position_id[]" value="{{ $position->id }}" />
+                    @else
+                        <input type="checkbox" name="position_id[]" value="{{ $position->id }}" />
+                    @endif
                     <label for="{{ $position->id }}">{{ $position->name }}</label>
                 @endforeach
             </div>

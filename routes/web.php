@@ -24,17 +24,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile/permissions', [ProfileController::class, 'permissions'])->name('profile.permissions');
+    Route::get('/profile/entries', [ProfileController::class, 'entries'])->name('profile.entries');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/workers', [WorkerController::class, 'index'])->name('workers');
-
-    Route::delete('/workers/{worker}', [WorkerController::class, 'destroy'])->name('workers.destroy');
-
-    Route::get('/workers/create', [WorkerController::class, 'create'])->name('workers.create');
-    Route::post('/workers', [WorkerController::class, 'store'])->name('workers.store');
-    Route::get('/workers/{worker}', [WorkerController::class, 'edit'])->name('workers.edit');
-    Route::patch('/workers/{worker}', [WorkerController::class, 'update'])->name('workers.update');
+    Route::resource('workers', WorkerController::class);
     Route::get('/workers/{worker}/entries', [WorkerController::class, 'entries']) -> name('workers.entries');
 });
 

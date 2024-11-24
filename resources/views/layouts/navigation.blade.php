@@ -16,7 +16,7 @@
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('workers')" :active="request()->routeIs('workers')">
+                        <x-nav-link :href="route('workers.index')" :active="request()->routeIs('workers')">
                             {{ __('Dolgozók') }}
                         </x-nav-link>
                         <x-nav-link :href="route('positions')" :active="request()->routeIs('positions')">
@@ -24,6 +24,12 @@
                         </x-nav-link>
                         <x-nav-link :href="route('rooms.index')" :active="request()->routeIs('rooms')">
                             {{ __('Szobák') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('profile.permissions')" :active="request()->routeIs('profile.permissions')">
+                            {{ __('Jogosultságaim') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('profile.entries')" :active="request()->routeIs('profile.entries')">
+                            {{ __('Belépéseim története') }}
                         </x-nav-link>
                     </div>
                 @else

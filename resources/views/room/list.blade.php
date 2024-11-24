@@ -1,5 +1,8 @@
 <x-app-layout>
     <h1>Szobák</h1>
+    @if (Auth::user()->admin)
+        <a href="{{ route('rooms.create') }}">Új szoba</a>
+    @endif
     <table>
         <tr>
             <th>Név</th>

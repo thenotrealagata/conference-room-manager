@@ -6,6 +6,8 @@ th, td {
     padding: 8px;
   }
 
-a, button {
-    text-decoration: underline;
+table  {
+    a, button {
+        text-decoration: underline;
+    }
 }

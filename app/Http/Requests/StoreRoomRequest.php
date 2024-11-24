@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreRoomRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class StoreRoomRequest extends FormRequest
         return [
             "name" => "required|string|min:5",
             "description" => "nullable|string|max:255",
-            'file' => 'file',
+            'file' => 'required|file',
             'position_id' => 'required'
         ];
     }

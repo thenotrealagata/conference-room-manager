@@ -54,7 +54,7 @@ class WorkerController extends Controller
         ]);
         $worker = User::create($validated);
 
-        return Redirect::route('workers');
+        return Redirect::route('workers.index');
     }
 
     public function destroy (Request $request, string $id): RedirectResponse {
@@ -65,7 +65,7 @@ class WorkerController extends Controller
 
         $user->delete();
 
-        return Redirect::route('workers');
+        return Redirect::route('workers.index');
     }
 
     public function update(Request $request, string $id) {
@@ -79,7 +79,7 @@ class WorkerController extends Controller
         $worker = User::findOrFail($id);
         $worker->update($validated);
 
-        return redirect()->route('workers');
+        return redirect()->route('workers.index');
     }
 
     public function entries(Request $request, string $id): View {

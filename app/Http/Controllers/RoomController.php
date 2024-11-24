@@ -44,7 +44,8 @@ class RoomController extends Controller
      */
     public function store(StoreRoomRequest $request)
     {
-        //
+        Room::create($request->validated());
+        return Redirect::route('rooms.index');
     }
 
     /**
@@ -68,6 +69,15 @@ class RoomController extends Controller
     {
         $room->update($request->validated());
         $room->positions()->sync($request->input('position_id'));
+
+        if($request->hasFile('file')) {
+            $filename = $request->file('file')->storePublicly();
+            $room->update([
+                'filename' => $request->file('file')->getClientOriginalName(),
+                'filename_hash' => $filename,
+            ]);
+        }
+
         return Redirect::route('rooms.index');
     }
 

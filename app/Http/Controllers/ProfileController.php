@@ -60,4 +60,22 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function permissions(): View {
+        $user = Auth::user();
+
+        return view('worker.permissions', [
+            "user" => User::findOrFail($user->id)
+        ]);
+    }
+
+    public function entries(): View {
+        $worker = User::findOrFail(Auth::user()->id);
+        $entries = $worker->userRoomEntries()->orderBy('created_at')->paginate(5);
+
+        return view('worker.entries', [
+            "worker" => $worker,
+            "entries" => $entries
+        ]);
+    }
 }
