@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 
@@ -47,7 +48,7 @@ class Room extends Model
         return $this->hasMany(UserRoomEntry::class);
     }
 
-    public function positions(): HasMany {
-        return $this->hasMany(Position::class);
+    public function positions(): BelongsToMany {
+        return $this->belongsToMany(Position::class, 'position_rooms');
     }
 }

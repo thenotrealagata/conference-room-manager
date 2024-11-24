@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Position;
 use App\Http\Requests\StorePositionRequest;
 use App\Http\Requests\UpdatePositionRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Http\RedirectResponse;
 
 class PositionController extends Controller
 {
@@ -13,7 +18,9 @@ class PositionController extends Controller
      */
     public function index()
     {
-        //
+        return view('positions', [
+            "positions" => Position::all(),
+        ]);
     }
 
     /**
@@ -27,25 +34,27 @@ class PositionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePositionRequest $request)
+    public function store(UpdatePositionRequest $request): RedirectResponse
     {
-        //
-    }
+        $position = Position::findOrFail($request->id);
+        $position->update($request);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Position $position)
-    {
-        //
+        return Redirect::route('positions');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Position $position)
+    public function edit(Request $request, string $id)
     {
-        //
+        if(!Auth::user()->admin) {
+            abort(401);
+        }
+        $position = Position::findOrFail($id);
+
+        return view('position.edit', [
+            "position" => $position
+        ]);
     }
 
     /**
@@ -53,14 +62,22 @@ class PositionController extends Controller
      */
     public function update(UpdatePositionRequest $request, Position $position)
     {
-        //
+        $position->update($request->validated());
+        return Redirect::route('positions');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Position $position)
+    public function destroy(Request $request, string $id)
     {
-        //
+        $user = Position::findOrFail($id);
+        if(!Auth::user()->admin) {
+            abort(401);
+        }
+
+        $user->delete();
+
+        return Redirect::route('positions');
     }
 }

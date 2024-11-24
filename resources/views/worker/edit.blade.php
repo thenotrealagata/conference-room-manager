@@ -59,6 +59,17 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="col">
+                @isset($positions)
+                    @foreach ($positions as $position)
+                        <input {{ old('position_id', $worker->position_id ?? '') == $position->id ? 'checked' : '' }} type="radio" id="{{$position->id}}" name="position_id" value="{{$position->id}}">
+                        <label for="{{$position->id}}">{{$position->name}}</label><br>
+                    @endforeach
+                @endisset
+                @error('position_id')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
             @empty($worker)
             <div class="col">
                 <input
@@ -69,18 +80,6 @@
                     id="password"
                 />
                 @error('password')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="col">
-                @isset($positions)
-                    @foreach ($positions as $position)
-
-                        <input {{ old('position_id', $position->id ?? '') == $position->id ? 'checked' : '' }} type="radio" id="{{$position->id}}" name="position_id" value="{{$position->id}}">
-                        <label for="{{$position->id}}">{{$position->name}}</label><br>
-                    @endforeach
-                @endisset
-                @error('position_id')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>

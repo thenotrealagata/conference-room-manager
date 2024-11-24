@@ -28,6 +28,14 @@ class DatabaseSeeder extends Seeder
             'password' => 'abc'
         ]);
 
+        User::factory()->create([
+            'name' => 'Példa Béla',
+            'email' => 'test2@example.com',
+            'admin' => false,
+            'position_id' => $positions->random()->id,
+            'password' => 'abc'
+        ]);
+
         foreach($positions as $position) {
             $n = random_int(2, 4);
             User::factory($n)->create(['position_id' => $position->id]);
