@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function() {
     Route::get('/positions', [PositionController::class, 'index'])->name('positions');
+    Route::get('/positions/create', [PositionController::class, 'create'])->name('positions.create');
+    Route::get('/positions/{position}/workers', [PositionController::class, 'workers'])->where('position', '[0-9]+')->name('positions.workers');
     Route::delete('/positions/{position}', [PositionController::class, 'destroy'])->name('positions.destroy');
     Route::get('/positions/{position}', [PositionController::class, 'edit'])->name('positions.edit');
     Route::patch('/positions/{position}', [PositionController::class, 'update'])->name('positions.update');

@@ -14,7 +14,7 @@ use Illuminate\View\View;
 class WorkerController extends Controller
 {
     public function index() {
-        return view('workers', [
+        return view('worker.list', [
             "workers" => User::all(),
         ]);
     }

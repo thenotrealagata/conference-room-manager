@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Position;
+use App\Models\User;
 use App\Http\Requests\StorePositionRequest;
 use App\Http\Requests\UpdatePositionRequest;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class PositionController extends Controller
      */
     public function index()
     {
-        return view('positions', [
+        return view('position.list', [
             "positions" => Position::all(),
         ]);
     }
@@ -28,7 +29,17 @@ class PositionController extends Controller
      */
     public function create()
     {
-        //
+        if(!Auth::user()->admin) {
+            abort(401);
+        }
+        return view('position.edit');
+    }
+
+    public function workers(string $id) {
+        $position = Position::findOrFail($id);
+        return view('position.workers', [
+            "position" => $position
+        ]);
     }
 
     /**
@@ -36,9 +47,7 @@ class PositionController extends Controller
      */
     public function store(UpdatePositionRequest $request): RedirectResponse
     {
-        $position = Position::findOrFail($request->id);
-        $position->update($request);
-
+        Position::create($request->validated());
         return Redirect::route('positions');
     }
 
