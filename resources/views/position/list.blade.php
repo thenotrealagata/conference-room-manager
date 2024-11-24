@@ -33,7 +33,7 @@
                     <a href="{{ route('positions.edit', ['position' => $position->id]) }}">Szerkesztés</a>
                 </td>
                 <td>
-                    <form method="post" action="{{ route('positions.destroy', ['position' => $position->id]) }}" class="mt-6 space-y-6">
+                    <form method="post" action="{{ route('positions.destroy', ['position' => $position->id]) }}">
                         @csrf
                         @method('delete')
                         <button>Törlés</button>

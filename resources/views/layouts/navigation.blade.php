@@ -22,6 +22,9 @@
                         <x-nav-link :href="route('positions')" :active="request()->routeIs('positions')">
                             {{ __('Munkakörök') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('rooms.index')" :active="request()->routeIs('rooms')">
+                            {{ __('Szobák') }}
+                        </x-nav-link>
                     </div>
                 @else
                     <!-- Logo -->

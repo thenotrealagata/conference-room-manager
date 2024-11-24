@@ -5,6 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Room;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
+use App\Models\Position;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class RoomController extends Controller
 {
@@ -13,7 +21,9 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+        return view('room.list', [
+            "rooms" => Room::all(),
+        ]);
     }
 
     /**
@@ -21,7 +31,12 @@ class RoomController extends Controller
      */
     public function create()
     {
-        //
+        if(!Auth::user()->admin) {
+            abort(401);
+        }
+        return view('room.edit', [
+            "positions" => Position::all()
+        ]);
     }
 
     /**
@@ -33,19 +48,17 @@ class RoomController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Room $room)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Room $room)
     {
-        //
+        if(!Auth::user()->admin) {
+            abort(401);
+        }
+        return view('room.edit', [
+            "room" => $room,
+            "positions" => Position::all()
+        ]);
     }
 
     /**
@@ -53,7 +66,9 @@ class RoomController extends Controller
      */
     public function update(UpdateRoomRequest $request, Room $room)
     {
-        //
+        $room->update($request->validated());
+        $room->positions()->sync($request->input('position_id'));
+        return Redirect::route('rooms.index');
     }
 
     /**
@@ -61,6 +76,20 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        //
+        if(!Auth::user()->admin) {
+            abort(401);
+        }
+        $room->delete();
+        return Redirect::route('rooms.index');
+    }
+
+    public function entries(Room $room) {
+        if(!Auth::user()->admin) {
+            abort(401);
+        }
+        return view('room.entries', [
+            "room" => $room,
+            "entries" => $room->userRoomEntries()->orderByDesc('created_at')->paginate(5)
+        ]);
     }
 }

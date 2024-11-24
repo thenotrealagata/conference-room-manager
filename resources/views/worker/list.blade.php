@@ -26,7 +26,7 @@
                 <a href="{{ route('workers.edit', ['worker' => $worker->id]) }}">Szerkesztés</a>
                 </x-primary-button></td>
             <td>
-                <form method="post" action="{{ route('workers.destroy', ['worker' => $worker->id]) }}" class="mt-6 space-y-6">
+                <form method="post" action="{{ route('workers.destroy', ['worker' => $worker->id]) }}">
                     @csrf
                     @method('delete')
                     <x-primary-button>Törlés</x-primary-button>

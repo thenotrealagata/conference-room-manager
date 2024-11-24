@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\WorkerController;
 use App\Models\Position;
 use App\Models\Room;
@@ -45,6 +46,11 @@ Route::middleware('auth')->group(function() {
     Route::get('/positions/{position}', [PositionController::class, 'edit'])->name('positions.edit');
     Route::patch('/positions/{position}', [PositionController::class, 'update'])->name('positions.update');
     Route::post('/positions', [PositionController::class, 'store'])->name('positions.store');
+});
+
+Route::middleware('auth')->group(function() {
+    Route::resource('rooms', RoomController::class);
+    Route::get('/rooms/{room}/entries', [RoomController::class, 'entries'])->where('room', '[0-9]+')->name('rooms.entries');
 });
 
 require __DIR__.'/auth.php';
