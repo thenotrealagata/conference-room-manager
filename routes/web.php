@@ -16,9 +16,7 @@ Route::get('/', function () {
     ]);
 })->name('welcome');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [WorkerController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -29,23 +27,20 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::resource('workers', WorkerController::class);
+    Route::resource('workers', WorkerController::class)->except('show');
     Route::get('/workers/{worker}/entries', [WorkerController::class, 'entries']) -> name('workers.entries');
 });
 
 Route::middleware('auth')->group(function() {
-    Route::get('/positions', [PositionController::class, 'index'])->name('positions');
-    Route::get('/positions/create', [PositionController::class, 'create'])->name('positions.create');
+    Route::resource('positions', PositionController::class)->except('show');
     Route::get('/positions/{position}/workers', [PositionController::class, 'workers'])->where('position', '[0-9]+')->name('positions.workers');
-    Route::delete('/positions/{position}', [PositionController::class, 'destroy'])->name('positions.destroy');
-    Route::get('/positions/{position}', [PositionController::class, 'edit'])->name('positions.edit');
-    Route::patch('/positions/{position}', [PositionController::class, 'update'])->name('positions.update');
-    Route::post('/positions', [PositionController::class, 'store'])->name('positions.store');
 });
 
 Route::middleware('auth')->group(function() {
-    Route::resource('rooms', RoomController::class);
+    Route::resource('rooms', RoomController::class)->except('show');
     Route::get('/rooms/{room}/entries', [RoomController::class, 'entries'])->where('room', '[0-9]+')->name('rooms.entries');
+    Route::get('/rooms/simulation', [RoomController::class, 'simulation'])->name('rooms.simulation');
+    Route::post('/rooms/attemptEntry', [RoomController::class, 'attemptEntry'])->name('rooms.attemptEntry');
 });
 
 require __DIR__.'/auth.php';

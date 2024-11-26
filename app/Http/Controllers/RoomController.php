@@ -7,6 +7,7 @@ use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use App\Models\Position;
 use App\Models\User;
+use App\Models\UserRoomEntry;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -100,6 +101,20 @@ class RoomController extends Controller
         return view('room.entries', [
             "room" => $room,
             "entries" => $room->userRoomEntries()->orderByDesc('created_at')->paginate(5)
+        ]);
+    }
+
+    public function simulation() {
+        return view('room.simulation', [
+            'workers' => User::all()->whereNotNull('card_number'),
+            'rooms' => Room::all()
+        ]);
+    }
+
+    public function attemptEntry(Request $request) {
+        $validated = $request->validate([
+            'worker' => 'required|integer|exists:App\Models\User,id',
+            'room' => 'required|integer|exists:App\Models\Room,id'
         ]);
     }
 }

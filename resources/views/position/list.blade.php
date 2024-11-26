@@ -13,7 +13,6 @@
             @if (Auth::user()->admin)
                 <th>Szerkesztés</th>
                 <th>Törlés</th>
-                <th>Belépések</th>
             @endif
         </tr>
         @foreach ($positions as $position)
@@ -38,9 +37,6 @@
                         @method('delete')
                         <button>Törlés</button>
                     </form>
-                </td>
-                <td>
-                    <a>Belépések</a>
                 </td>
             @endif
         </tr>

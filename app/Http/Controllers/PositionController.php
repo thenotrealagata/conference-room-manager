@@ -48,7 +48,7 @@ class PositionController extends Controller
     public function store(UpdatePositionRequest $request): RedirectResponse
     {
         Position::create($request->validated());
-        return Redirect::route('positions');
+        return Redirect::route('positions.index');
     }
 
     /**
@@ -72,7 +72,7 @@ class PositionController extends Controller
     public function update(UpdatePositionRequest $request, Position $position)
     {
         $position->update($request->validated());
-        return Redirect::route('positions');
+        return Redirect::route('positions.index');
     }
 
     /**
@@ -87,6 +87,6 @@ class PositionController extends Controller
 
         $user->delete();
 
-        return Redirect::route('positions');
+        return Redirect::route('positions.index');
     }
 }

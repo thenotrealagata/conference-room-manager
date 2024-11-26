@@ -13,13 +13,10 @@
 
                     <!-- Navigation Links -->
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
                         <x-nav-link :href="route('workers.index')" :active="request()->routeIs('workers')">
                             {{ __('Dolgozók') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('positions')" :active="request()->routeIs('positions')">
+                        <x-nav-link :href="route('positions.index')" :active="request()->routeIs('positions.index')">
                             {{ __('Munkakörök') }}
                         </x-nav-link>
                         <x-nav-link :href="route('rooms.index')" :active="request()->routeIs('rooms')">
@@ -30,6 +27,9 @@
                         </x-nav-link>
                         <x-nav-link :href="route('profile.entries')" :active="request()->routeIs('profile.entries')">
                             {{ __('Belépéseim története') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('rooms.simulation')" :active="request()->routeIs('rooms.simulation')">
+                            {{ __('Szimuláció') }}
                         </x-nav-link>
                     </div>
                 @else
