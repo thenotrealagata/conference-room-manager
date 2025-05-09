@@ -1,22 +1,14 @@
-[X] Adatbázis és modellek (3 pont)
-[X] Seeder (3 pont)
-[X] Főoldal (1 pont)
-[X] Dolgozók listázása (2 pont)
-[X] Új dolgozó létrehozása (3 pont)
-[X] Dolgozó módosítása (3 pont)
-[X] Dolgozó törlése (1 pont)
-[X] Dolgozó belépéseinek története (2 pont)
-[X] Munkakörök listázása (2 pont)
-[X] Új munkakör létrehozása (2 pont)
-[X] Munkakör módosítása (2 pont)
-[X] Munkakör törlése (1 pont)
-[X] Munkakörbe tartozó dolgozók (2 pont)
-[X] Szobák listázása (2 pont)
-[X] Új szoba létrehozása (3 pont)
-[X] Szoba módosítása (3 pont)
-[X] Szoba törlése (1 pont)
-[X] Szobába belépések történeket (2 pont)
-[ ] Belépés szimuláció (4 pont)
-[X] Jogosultságaim - hova léphetek be (2 pont)
-[X] Belépéseim története (2 pont)
-[ ] Védés (4 pont)
+# Office managemenent tool
+Developed for the 2024 winter semester as an assignment for a backend development class at ELTE.
+
+## Set up project
+First create the database as database.sqlite in the database  and create a .env file based on the .env.example file in the root. Then, to run the project, run the following commands:
+composer install
+php artisan migrate:fresh --seed
+php artisan key:generate
+npm install
+npm run dev
+php artisan serve
+
+## Introduction
+This application allows for the handling of employees, conference rooms and rights. The rights of an employee determine whether or not an employee can enter a conference room.
